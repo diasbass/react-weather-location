@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
+import "materialize-css/dist/css/materialize.min.css";
 
 function App() {
   const [location, setLocation] = useState(false);
@@ -7,7 +8,7 @@ function App() {
 
   let getWeather = async (lat, long) => {
     let res = await axios.get(
-      "http://api.openweathermap.org/data/2.5/weather",
+      "https://api.openweathermap.org/data/2.5/weather",
       {
         params: {
           lat: lat,
@@ -32,24 +33,55 @@ function App() {
 
   if (location == false) {
     return (
-      <Fragment>Você precisa habilitar a localização no browser o/</Fragment>
+      <Fragment>
+        <div className="row">
+          <div className="col s12 m6">
+            <div className="card blue-grey darken-1">
+              <div className="card-content white-text">
+                <span className="card-title">Permita sua localização</span>
+                <p>
+                  Você precisa permitir que consultemos sua localização através
+                  do seu browser
+                </p>
+              </div>
+              <div className="card-action">
+                <a
+                  href="https://support.google.com/chrome/answer/142065?co=GENIE.Platform%3DDesktop&hl=pt"
+                  target="_blank"
+                >
+                  Saiba como
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Fragment>
     );
   } else if (weather == false) {
     return <Fragment>Carregando o clima...</Fragment>;
   } else {
     return (
       <Fragment>
-        <h3>
-          Clima em {weather["name"]} ({weather["weather"][0]["description"]})
-        </h3>
-        <hr />
-        <ul>
-          <li>Temperatura atual: {weather["main"]["temp"]}°</li>
-          <li>Temperatura máxima: {weather["main"]["temp_max"]}°</li>
-          <li>Temperatura minima: {weather["main"]["temp_min"]}°</li>
-          <li>Pressão: {weather["main"]["pressure"]} hpa</li>
-          <li>Humidade: {weather["main"]["humidity"]}%</li>
-        </ul>
+        <div className="row">
+          <div className="col s12 m6">
+            <div className="card blue-grey darken-1">
+              <div className="card-content white-text">
+                <h3 className="card-title">
+                  Clima em {weather["name"]} (
+                  {weather["weather"][0]["description"]})
+                </h3>
+                <ul>
+                  <li>Temperatura atual: {weather["main"]["temp"]}°</li>
+                  <li>Temperatura máxima: {weather["main"]["temp_max"]}°</li>
+                  <li>Temperatura minima: {weather["main"]["temp_min"]}°</li>
+                  <li>Pressão: {weather["main"]["pressure"]} hpa</li>
+                  <li>Humidade: {weather["main"]["humidity"]}%</li>
+                </ul>
+              </div>
+              <div className="card-action"></div>
+            </div>
+          </div>
+        </div>
       </Fragment>
     );
   }
